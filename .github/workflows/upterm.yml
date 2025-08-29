@@ -11,15 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Create a "random" folder + text file you can access once connected
       - name: Create demo folder & file
         run: |
           mkdir -p demo_folder
-          echo "Hello from GitHub Actions on $(date)" > demo_folder/hello.txt
-          echo "Random number: $RANDOM" >> demo_folder/hello.txt
+          echo "Hei team hermes idag er det strålende sol og dagen er $(date)" > demo_folder/hello.txt
+          echo "Smakte bollen godt?" >> demo_folder/hello.txt
           ls -la demo_folder
 
-      # Start upterm (tmux-backed) session
       - name: Setup upterm session
         uses: owenthereal/action-upterm@v1
         with:
