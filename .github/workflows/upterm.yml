@@ -1,0 +1,31 @@
+
+name: Demo Upterm SSH
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Create a "random" folder + text file you can access once connected
+      - name: Create demo folder & file
+        run: |
+          mkdir -p demo_folder
+          echo "Hello from GitHub Actions on $(date)" > demo_folder/hello.txt
+          echo "Random number: $RANDOM" >> demo_folder/hello.txt
+          ls -la demo_folder
+
+      # Start upterm (tmux-backed) session
+      - name: Setup upterm session
+        uses: owenthereal/action-upterm@v1
+        with:
+          # Restrict SSH access to the user who triggered this run (uses your GitHub profile's SSH public keys)
+          limit-access-to-actor: true
+          # Or explicitly list allowed GitHub usernames (comma-separated) if you want to share:
+          # limit-access-to-users: yourgithubuser,teammate
+          # If you host your own upterm server, you can point to it:
+          # upterm-server: wss://YOUR_UPTERM_SERVER_URL
